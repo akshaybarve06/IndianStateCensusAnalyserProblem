@@ -26,15 +26,25 @@ public class StateCensusTest {
         }
     }
     @Test
-    public void givenStateCensusAnalyserFile_WhenIncorrectDelimiters_ReturnsException() throws IOException {
+    public void givenStateCensusAnalyserFile_WhenIncorrectDelimiters_ReturnsException()  {
+        INPUT_CSV_FILE_PATH = "src/test/resources/stateCensusData.csv";
+        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
+        try {
+            censusAnalyser.loadData();
+        } catch (CensusAnalyserCustomException e) {
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
+            System.out.println("Wrong Delimiter File Given");
+        }
+    }
+    @Test
+    public void givenStateCensusAnalyserFile_WhenIncorrectHeader_ReturnsException() {
         INPUT_CSV_FILE_PATH = "src/test/resources/StateCensusDataCopy.csv";
         StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
         try {
             censusAnalyser.loadData();
         } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_INCORRECT_EXCEPTION,e.typeOfException);
-            System.out.println("Wrong Delimiter File Given");
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION, e.typeOfException);
+            System.out.println("Delimiter Correct But CSV Header Incorrect");
         }
     }
-
 }

@@ -6,6 +6,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import static java.nio.file.Files.newBufferedReader;
@@ -21,8 +22,8 @@ import static java.nio.file.Files.newBufferedReader;
         }
 
         int noOfRecords=0;
-        public int loadData() throws IOException, CensusAnalyserCustomException {
-            try(Reader reader = newBufferedReader(Paths.get(INPUT_CSV_FILE_PATH)); ){
+        public int loadData() throws CensusAnalyserCustomException {
+            try (Reader reader = newBufferedReader(Paths.get(INPUT_CSV_FILE_PATH));) {
                 CsvToBean<StateCensusCSV> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
                         .withType(StateCensusCSV.class)
                         .withIgnoreLeadingWhiteSpace(true)
@@ -38,13 +39,15 @@ import static java.nio.file.Files.newBufferedReader;
                     System.out.println("---------------------------------");
                     noOfRecords++;
                 }
-            }
-            catch (IOException e) {
+            } catch (NoSuchFileException e) {
                 throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+            } catch (RuntimeException e) {
+                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
             }
-            catch (RuntimeException e){
-                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_INCORRECT_EXCEPTION);
+            catch (IOException e){
+                e.printStackTrace();
             }
             return noOfRecords;
         }
+
     }
