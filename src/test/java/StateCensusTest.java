@@ -36,5 +36,4 @@ public class StateCensusTest {
             System.out.println("Wrong Delimiter File Given");
         }
     }
-
 }
