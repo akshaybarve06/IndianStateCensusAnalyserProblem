@@ -21,7 +21,7 @@ import static java.nio.file.Files.newBufferedReader;
         }
 
         int noOfRecords=0;
-        public int loadData() throws IOException, CensusAnalyserCustomException {
+        public int loadData() throws CensusAnalyserCustomException {
             try(Reader reader = newBufferedReader(Paths.get(INPUT_CSV_FILE_PATH)); ){
                 CsvToBean<StateCensusCSV> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
                         .withType(StateCensusCSV.class)
@@ -43,7 +43,7 @@ import static java.nio.file.Files.newBufferedReader;
                 throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
             }
             catch (RuntimeException e){
-                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_INCORRECT_EXCEPTION);
+                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
             }
             return noOfRecords;
         }
