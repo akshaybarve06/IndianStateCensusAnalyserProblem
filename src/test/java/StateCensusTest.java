@@ -6,9 +6,9 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class StateCensusTest {
-    private static final String INPUT_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
+    private static final String INPUT_CSV_FILE_PATH = "./src/test/resources/StateCensusData.jpg";
 
-    @Test
+        @Test
         public void givenStateCensusCSV_WhenConditionTrue_ReturnNumberOfRecordMatch() throws IOException, CensusAnalyserCustomException {
             StateCensusAnalyser censusAnalyser=new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
             int noOfRecords=censusAnalyser.loadData();
