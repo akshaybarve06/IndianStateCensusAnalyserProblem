@@ -42,6 +42,9 @@ import static java.nio.file.Files.newBufferedReader;
             catch (IOException e) {
                 throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
             }
+            catch (RuntimeException e){
+                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_INCORRECT_EXCEPTION);
+            }
             return noOfRecords;
         }
     }
