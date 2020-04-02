@@ -1,5 +1,6 @@
 package com.services;
 
+import com.exception.CensusAnalyserCustomException;
 import com.model.StateCensusCSV;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -13,10 +14,15 @@ import static java.nio.file.Files.newBufferedReader;
         public static void main(String args[]){
             System.out.println("Welcome To Indian States Census Analyser Problem");
         }
-        public static final String CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
+        public static String INPUT_CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
+
+        public StateCensusAnalyser(String path) {
+            INPUT_CSV_FILE_PATH = path;
+        }
+
         int noOfRecords=0;
-        public int loadData() throws IOException{
-            try(Reader reader = newBufferedReader(Paths.get(CSV_FILE_PATH)); ){
+        public int loadData() throws IOException, CensusAnalyserCustomException {
+            try(Reader reader = newBufferedReader(Paths.get(INPUT_CSV_FILE_PATH)); ){
                 CsvToBean<StateCensusCSV> csvStateCensusBeanObj = new CsvToBeanBuilder(reader)
                         .withType(StateCensusCSV.class)
                         .withIgnoreLeadingWhiteSpace(true)
@@ -32,6 +38,9 @@ import static java.nio.file.Files.newBufferedReader;
                     System.out.println("---------------------------------");
                     noOfRecords++;
                 }
+            }
+            catch (IOException e) {
+                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
             }
             return noOfRecords;
         }
