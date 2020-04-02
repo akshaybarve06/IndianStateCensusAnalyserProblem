@@ -10,3 +10,5 @@ public class CensusAnalyserCustomException extends Exception{
         this.typeOfException = typeOfException;
     }
 }
+
+
