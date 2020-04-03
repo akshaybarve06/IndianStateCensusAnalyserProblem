@@ -78,12 +78,24 @@ public class StateCensusTest {
     public void givenStateCodeWhenFalse_ReturnExceptionFileNotFount()  {
         CSV_FILE_PATH = "src/test/resources/StateCodeDataCSV.csv";
         StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
-        try{
+        try {
             csvStates.LoadStateCodeCSVData();
-        }catch (CensusAnalyserCustomException e){
+        } catch (CensusAnalyserCustomException e)
+        {
             Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
             System.out.println("File Given as Input, Is Not Found ");
         }
     }
     //TC 2.3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
+    @Test
+    public void givenStateCode_WhenImproperFileType_ReturnException(){
+        CSV_FILE_PATH = "/src/test/resources/StateCode.jpg";
+        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
+        try {
+            csvStates.LoadStateCodeCSVData();
+        } catch (CensusAnalyserCustomException e) {
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
+            System.out.println("File With Wrong Type Given As Input ");
+        }
+    }
 }
