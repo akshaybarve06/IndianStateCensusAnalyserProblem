@@ -98,4 +98,17 @@ public class StateCensusTest {
             System.out.println("File With Wrong Type Given As Input ");
         }
     }
+    // TC 2.4
+    @Test // handle delimiter exception
+    public void givenStateCode_WhenImproperDelimiter_ReturnException(){
+        CSV_FILE_PATH = "src/test/resources/StateCodeCopy.csv";
+        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
+        try {
+            csvStates.LoadStateCodeCSVData();
+        } catch (CensusAnalyserCustomException e) {
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION, e.typeOfException);
+            System.out.println("File With Wrong Delimiter Given As Input ");
+        }
+    }
+
 }

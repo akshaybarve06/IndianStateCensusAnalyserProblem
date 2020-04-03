@@ -43,6 +43,9 @@ public class StateDataCSVAnalyser {
             catch (NoSuchFileException e) {
                 throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
             }
+            catch (RuntimeException e){
+                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+            }
             catch (IOException e) {
                 e.printStackTrace();
             }
