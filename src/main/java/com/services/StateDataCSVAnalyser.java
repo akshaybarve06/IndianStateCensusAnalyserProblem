@@ -41,10 +41,10 @@ public class StateDataCSVAnalyser {
                 }
             }
             catch (NoSuchFileException e) {
-                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+                throw new CensusAnalyserCustomException("FIVEN FILE IS NOT FOUND..",CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
             }
             catch (RuntimeException e){
-                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+                throw new CensusAnalyserCustomException("DELIMITER OR HEADER INCORRECT..",CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
             }
             catch (IOException e) {
                 e.printStackTrace();

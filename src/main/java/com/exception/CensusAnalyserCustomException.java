@@ -7,7 +7,8 @@ public class CensusAnalyserCustomException extends Exception{
     }
     public TypeOfExceptionThrown typeOfException;
 
-    public CensusAnalyserCustomException(TypeOfExceptionThrown typeOfException) {
+    public CensusAnalyserCustomException(String message, TypeOfExceptionThrown typeOfException) {
+        super(message);
         this.typeOfException = typeOfException;
     }
 }

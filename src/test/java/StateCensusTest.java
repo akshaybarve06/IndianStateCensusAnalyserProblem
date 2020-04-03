@@ -1,125 +1,106 @@
 import com.exception.CensusAnalyserCustomException;
 import com.services.StateCensusAnalyser;
-import com.services.StateDataCSVAnalyser;
 import org.junit.Assert;
 import org.junit.Test;
-import java.io.IOException;
 
 public class StateCensusTest {
-    private static  String INPUT_CSV_FILE_PATH = "src/test/resources/StateCensusDataCopy.csv" ;
-    public static String CSV_FILE_PATH = "src/test/resources/StateCode.csv";
 
-    // TC 1.1 READ CSV FILE IF NUMBER OF RECORDS MATCHES
+    StateCensusAnalyser censusAnalyserObject=new StateCensusAnalyser();
+
+    //**************************** FOR INDIAN STATE CENSUS ***********************************
+
+    // TC-1 READ CSV FILE IF NUMBER OF RECORDS MATCHES
     @Test
     public void givenStateCensusCSV_WhenConditionTrue_ReturnNumberOfRecordMatch() throws CensusAnalyserCustomException {
-        INPUT_CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
-        StateCensusAnalyser censusAnalyser=new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
-        int noOfRecords=censusAnalyser.loadData();
-        Assert.assertEquals(29,noOfRecords);
+        Integer noOfRecords = censusAnalyserObject.readFile("src/test/resources/StateCensusData.csv");
+        Assert.assertEquals((Integer) 29, noOfRecords);
     }
-    // TC 1.2 IF FILENAME INCORRECT THEN THROW CUSTOM EXCEPTION
+
+    // TC-2 IF FILENAME INCORRECT THEN THROW CUSTOM EXCEPTION
     @Test
-    public void givenStateCensusCSV_WhenImproperFileName_ReturnsException() throws IOException{
-        INPUT_CSV_FILE_PATH = "src/test/resources/StateCensus.jpg";
+    public void givenStateCensusAnalyserFile_WhenImproperFile_ReturnsException() {
         try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
-            censusAnalyser.loadData();
+            censusAnalyserObject.readFile("src/test/resources/StateCensus.csv");
         } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION,e.typeOfException);
-            System.out.println("Wrong File Given");
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
     }
-    // TC 1.3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
+
+    // TC-3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusCSV_WhenImproperFileNameExtension_ReturnsException() throws IOException{
-        INPUT_CSV_FILE_PATH = "src/test/resources/StateCensusData.jpg";
+    public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException()  {
         try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
-            censusAnalyser.loadData();
+            censusAnalyserObject.readFile("src/test/resources/StateCensusData.jpg");
         } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION,e.typeOfException);
-            System.out.println("Wrong File Given");
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
     }
-    // TC 1.4 IF DELIMITER OF FILE IS NOT MATCHES THEN RETURN INCORRECT DELIMITER EXCEPTION
+
+    // TC-4 IF FILE DELIMITERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusAnalyserFile_WhenIncorrectDelimiters_ReturnsException()  {
-        INPUT_CSV_FILE_PATH = "src/test/resources/stateCensusData.csv";
-        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
+    public void givenStateCensusCSV_WhenImproperFileNameDelimiter_ReturnsException() {
         try {
-            censusAnalyser.loadData();
+            censusAnalyserObject.readFile("src/test/resources/StateCensusDataCopy.csv");
         } catch (CensusAnalyserCustomException e) {
             Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
-            System.out.println("Wrong Delimiter File Given");
         }
     }
-    // TC 1.5 IF HEADER OF FILE IS NOT MATCHES THEN THROWS DELIMITER HEADER INCORRECT EXCEPTION
+
+    // TC-5 IF FILE HEADERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusAnalyserFile_WhenIncorrectHeader_ReturnsException() {
-        INPUT_CSV_FILE_PATH = "src/test/resources/StateCensusDataCopy.csv";
-        StateCensusAnalyser censusAnalyser = new StateCensusAnalyser(INPUT_CSV_FILE_PATH);
+    public void givenStateCensusCSV_WhenImproperFileHeaders_ReturnsException() {
         try {
-            censusAnalyser.loadData();
+            censusAnalyserObject.readFile("src/test/resources/StateCensusDataCopy2.csv");
         } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION, e.typeOfException);
-            System.out.println("Delimiter Correct But CSV Header Incorrect");
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
     }
-    // TC 2.1 READ ALL RECORDS OR DATA FROM STATECODE.CSV FILE
+    //**************************** FOR INDIAN STATE CODE ***********************************
+
+    // TC-1 READ CSV FILE IF NUMBER OF RECORDS MATCHES
     @Test
-    public void givenStateCodeWhenTrue_NumberOfRecordMatch() throws CensusAnalyserCustomException {
-        CSV_FILE_PATH = "src/test/resources/StateCode.csv";
-        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
-        int noOfRecords = csvStates.LoadStateCodeCSVData();
-        Assert.assertEquals(37, noOfRecords);
+    public void givenStateCode_WhenTrue_NumberOfRecordShouldMatch() throws Exception {
+        Integer result = censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.csv");
+        Assert.assertEquals((Integer) 37, result);
     }
-    // TC 2.2 IF GIVEN INPUT FILE IS INCORRECT THEN THROW FILE NOT FOUND EXCEPTION
+
+    // TC-2 IF FILENAME INCORRECT THEN THROW CUSTOM EXCEPTION
     @Test
-    public void givenStateCodeWhenFalse_ReturnExceptionFileNotFount()  {
-        CSV_FILE_PATH = "src/test/resources/StateCodeDataCSV.csv";
-        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
+    public void givenStateCodeAnalyserFile_WhenImproperFile_ReturnsException() {
         try {
-            csvStates.LoadStateCodeCSVData();
-        } catch (CensusAnalyserCustomException e)
-        {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
-            System.out.println("File Given as Input, Is Not Found ");
-        }
-    }
-    //TC 2.3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
-    @Test
-    public void givenStateCode_WhenImproperFileType_ReturnException(){
-        CSV_FILE_PATH = "/src/test/resources/StateCode.jpg";
-        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
-        try {
-            csvStates.LoadStateCodeCSVData();
+            censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeData.csv");
         } catch (CensusAnalyserCustomException e) {
             Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
-            System.out.println("File With Wrong Type Given As Input ");
         }
     }
-    // TC 2.4 IF FILE CORRECT BUT DELIMITER IS INCORRECT THROW EXCEPTION
+
+    // TC-3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCode_WhenImproperDelimiter_ReturnException(){
-        CSV_FILE_PATH = "src/test/resources/StateCodeCopy.csv";
-        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
+    public void givenStateCodeAnalyserFile_WhenImproperFileName_ReturnsException() {
         try {
-            csvStates.LoadStateCodeCSVData();
+            censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.jpg");
         } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION, e.typeOfException);
-            System.out.println("File With Wrong Delimiter Given As Input ");
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
     }
-    // TC 2.5 IF FILE CORRECT BUT HEADER IS INCORRECT THROW EXCEPTION
+
+    // TC-4 IF FILE DELIMITERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCode_WhenImproperHeader_ReturnException(){
-        CSV_FILE_PATH = "src/test/resources/StateCodeCopy2.csv";
-        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
+    public void givenStateCodeCSV_WhenImproperFileNameDelimiter_ReturnsException(){
         try {
-            csvStates.LoadStateCodeCSVData();
+            censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeCopy.csv");
         } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION, e.typeOfException);
-            System.out.println("File With Wrong Header Given As Input ");
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
+        }
+    }
+
+    // TC-5 IF FILE HEADERS ARE NOT PROPER THEN THROW EXCEPTION
+    @Test
+    public void givenStateCodeCSV_WhenImproperFileHeaders_ReturnsException(){
+        try {
+            censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeCopy2.csv");
+        } catch (CensusAnalyserCustomException e) {
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
     }
 }
