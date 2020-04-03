@@ -11,14 +11,14 @@ public class StateCensusTest {
 
     // TC-1 READ CSV FILE IF NUMBER OF RECORDS MATCHES
     @Test
-    public void givenStateCensusCSV_WhenConditionTrue_ReturnNumberOfRecordMatch() throws CensusAnalyserCustomException {
+    public void givenStateCensusCSV_WhenConditionTrue_ReturnNumberOfRecordMatch() throws Exception {
         Integer noOfRecords = censusAnalyserObject.readFile("src/test/resources/StateCensusData.csv");
         Assert.assertEquals((Integer) 29, noOfRecords);
     }
 
     // TC-2 IF FILENAME INCORRECT THEN THROW CUSTOM EXCEPTION
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperFile_ReturnsException() {
+    public void givenStateCensusAnalyserFile_WhenImproperFile_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensus.csv");
         } catch (CensusAnalyserCustomException e) {
@@ -28,7 +28,7 @@ public class StateCensusTest {
 
     // TC-3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException()  {
+    public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensusData.jpg");
         } catch (CensusAnalyserCustomException e) {
@@ -38,7 +38,7 @@ public class StateCensusTest {
 
     // TC-4 IF FILE DELIMITERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusCSV_WhenImproperFileNameDelimiter_ReturnsException() {
+    public void givenStateCensusCSV_WhenImproperFileNameDelimiter_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensusDataCopy.csv");
         } catch (CensusAnalyserCustomException e) {
@@ -48,7 +48,7 @@ public class StateCensusTest {
 
     // TC-5 IF FILE HEADERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusCSV_WhenImproperFileHeaders_ReturnsException() {
+    public void givenStateCensusCSV_WhenImproperFileHeaders_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensusDataCopy2.csv");
         } catch (CensusAnalyserCustomException e) {
@@ -66,7 +66,7 @@ public class StateCensusTest {
 
     // TC-2 IF FILENAME INCORRECT THEN THROW CUSTOM EXCEPTION
     @Test
-    public void givenStateCodeAnalyserFile_WhenImproperFile_ReturnsException() {
+    public void givenStateCodeAnalyserFile_WhenImproperFile_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeData.csv");
         } catch (CensusAnalyserCustomException e) {
@@ -76,7 +76,7 @@ public class StateCensusTest {
 
     // TC-3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCodeAnalyserFile_WhenImproperFileName_ReturnsException() {
+    public void givenStateCodeAnalyserFile_WhenImproperFileName_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.jpg");
         } catch (CensusAnalyserCustomException e) {
@@ -86,7 +86,7 @@ public class StateCensusTest {
 
     // TC-4 IF FILE DELIMITERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCodeCSV_WhenImproperFileNameDelimiter_ReturnsException(){
+    public void givenStateCodeCSV_WhenImproperFileNameDelimiter_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeCopy.csv");
         } catch (CensusAnalyserCustomException e) {
@@ -96,7 +96,7 @@ public class StateCensusTest {
 
     // TC-5 IF FILE HEADERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCodeCSV_WhenImproperFileHeaders_ReturnsException(){
+    public void givenStateCodeCSV_WhenImproperFileHeaders_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeCopy2.csv");
         } catch (CensusAnalyserCustomException e) {
