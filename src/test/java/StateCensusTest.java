@@ -110,5 +110,16 @@ public class StateCensusTest {
             System.out.println("File With Wrong Delimiter Given As Input ");
         }
     }
-
+    // TC 2.5 IF FILE CORRECT BUT HEADER IS INCORRECT THROW EXCEPTION
+    @Test
+    public void givenStateCode_WhenImproperHeader_ReturnException(){
+        CSV_FILE_PATH = "src/test/resources/StateCodeCopy2.csv";
+        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
+        try {
+            csvStates.LoadStateCodeCSVData();
+        } catch (CensusAnalyserCustomException e) {
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION, e.typeOfException);
+            System.out.println("File With Wrong Header Given As Input ");
+        }
+    }
 }
