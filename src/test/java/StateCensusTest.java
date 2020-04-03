@@ -50,10 +50,21 @@ public class StateCensusTest {
         }
     }
     @Test
-    public void givenStateCodeWhenTrue_NumberOfRecordMatch() throws IOException {
+    public void givenStateCodeWhenTrue_NumberOfRecordMatch() throws CensusAnalyserCustomException {
         CSV_FILE_PATH = "src/test/resources/StateCode.csv";
         StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
         int noOfRecords = csvStates.LoadStateCodeCSVData();
         Assert.assertEquals(37, noOfRecords);
+    }
+    @Test
+    public void givenStateCodeWhenFalse_ReturnExceptionFileNotFount()  {
+        CSV_FILE_PATH = "src/test/resources/StateCodeDataCSV.csv";
+        StateDataCSVAnalyser csvStates = new StateDataCSVAnalyser(CSV_FILE_PATH);
+        try{
+            csvStates.LoadStateCodeCSVData();
+        }catch (CensusAnalyserCustomException e){
+            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
+            System.out.println("File Given as Input, Is Not Found ");
+        }
     }
 }

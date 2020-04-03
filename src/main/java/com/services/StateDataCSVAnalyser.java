@@ -1,11 +1,13 @@
 package com.services;
 
+import com.exception.CensusAnalyserCustomException;
 import com.model.StateDataCSV;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
@@ -16,15 +18,19 @@ public class StateDataCSVAnalyser {
             CSV_FILE_PATH = Path;
         }
 
-        public int LoadStateCodeCSVData() throws IOException {
-            try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH));) {
+        public int LoadStateCodeCSVData() throws CensusAnalyserCustomException
+        {
+            try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH));)
+            {
                 CsvToBean<StateDataCSV> csvStateCensuses = new CsvToBeanBuilder(reader)
                         .withType(StateDataCSV.class)
                         .withIgnoreLeadingWhiteSpace(true)
                         .build();
 
                 Iterator<StateDataCSV> csvStatesIterator = csvStateCensuses.iterator();
-                while (csvStatesIterator.hasNext()) {
+
+                while (csvStatesIterator.hasNext())
+                {
                     StateDataCSV csvStates = csvStatesIterator.next();
                     System.out.println("SrNo :" + csvStates.getSrNo());
                     System.out.println("StateName :" + csvStates.getStateName());
@@ -32,8 +38,13 @@ public class StateDataCSVAnalyser {
                     System.out.println("StateCode :" + csvStates.getStateCode());
                     System.out.println("--------------------------");
                     noOfRecords++;
-
                 }
+            }
+            catch (NoSuchFileException e) {
+                throw new CensusAnalyserCustomException(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
             }
             return noOfRecords;
         }
