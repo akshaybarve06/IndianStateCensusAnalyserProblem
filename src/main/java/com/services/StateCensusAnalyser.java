@@ -11,9 +11,11 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
+//Combined Both StateCensus and StateCode Classes Into One
 public class StateCensusAnalyser  {
 
     OpenCSV openCSV = new OpenCSV();
+    // Method For Reading Data From STATECENSUS File
     public Integer readFile(String filePath) throws Exception{
         try (Reader reader = Files.newBufferedReader(Paths.get(filePath));) {
             Iterator<StateCensusCSV> stateCSVIterator = openCSV.CSVfileIterator(reader, StateCensusCSV.class);
@@ -27,6 +29,7 @@ public class StateCensusAnalyser  {
         }
     }
 
+    // Method For Load data from STATECODECSV file
     public Integer loadIndianStateCodeData (String csvFilePath) throws Exception {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             Iterator<StateDataCSV> statesCSVIterator = OpenCSV.CSVfileIterator(reader, StateDataCSV.class);

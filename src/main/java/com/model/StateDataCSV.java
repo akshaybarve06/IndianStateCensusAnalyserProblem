@@ -2,17 +2,20 @@ package com.model;
 
 import com.opencsv.bean.CsvBindByName;
 
+//StateDataCSV POJO  Class
 public class StateDataCSV {
 
+    // Default Constructor
     public StateDataCSV(){
     }
+    // Parameterized Constructor
     public StateDataCSV(String srNo, String stateName, String stateCode, String TIN) {
         SrNo = srNo;
         StateName = stateName;
         StateCode = stateCode;
         this.TIN = TIN;
     }
-
+    // Variable To Bind With CSV File Header
     @CsvBindByName(column = "SrNo")
         private String SrNo;
 
@@ -25,7 +28,8 @@ public class StateDataCSV {
         @CsvBindByName(column = "TIN")
         private String TIN;
 
-        public String getSrNo() {
+    // Getters and Setters
+    public String getSrNo() {
             return SrNo;
         }
 

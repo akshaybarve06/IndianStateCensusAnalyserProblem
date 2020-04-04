@@ -7,11 +7,15 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import java.io.Reader;
 import java.util.Iterator;
 
+// Introduced OenCSV Class
+
 public class OpenCSV extends CSVInterface {
+
     public static <E> Iterator<E> CSVfileIterator(Reader reader, Class<E> csvClass) throws CensusAnalyserCustomException {
         return getCSVToBeen(reader,csvClass).iterator();
     }
 
+    // Introduce CSVBeanBuilder
     public static <E> CsvToBean<E> getCSVToBeen(Reader reader, Class<E> csvClass) throws CensusAnalyserCustomException {
         try {
             CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder<E>(reader);
