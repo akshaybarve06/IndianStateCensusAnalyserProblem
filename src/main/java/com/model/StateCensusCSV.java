@@ -18,16 +18,16 @@ public class StateCensusCSV {
 
     //Variables to Bind with Header of CSV
     @CsvBindByName(column = "State")
-    private String state;
+    public String state;
 
     @CsvBindByName(column = "Population")
-    private String population;
+    public String population;
 
     @CsvBindByName(column = "AreaInSqKm")
-    private String AreaInSqKm;
+    public String AreaInSqKm;
 
     @CsvBindByName(column = "DensityPerSqKm")
-    private String DensityPerSqKm;
+    public String DensityPerSqKm;
 
     // Getters and Setters
     public String getState() {
