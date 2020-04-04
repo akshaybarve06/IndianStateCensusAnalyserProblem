@@ -1,4 +1,6 @@
 import com.exception.CSVBuilderException;
+import com.google.gson.Gson;
+import com.model.StateCensusCSV;
 import com.services.StateCensusAnalyser;
 import org.junit.Assert;
 import org.junit.Test;
@@ -101,6 +103,17 @@ public class StateCensusTest {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeCopy2.csv");
         } catch (CSVBuilderException e) {
             Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
+        }
+    }
+    @Test
+    public void givenIndianStateCensusData_WhenSorted_ReturnSortedResult(){
+        try {
+            StateCensusAnalyser statesCensusAnalyser = new StateCensusAnalyser();
+            String stateWiseSortedData = statesCensusAnalyser.getStateWiseSortedData("src/test/resources/StateCensusData.csv");
+            StateCensusCSV[] CensusAnalysers = new Gson().fromJson(stateWiseSortedData, StateCensusCSV[].class);
+            Assert.assertEquals("Andhra Pradesh", CensusAnalysers[0].getState());
+        }
+        catch (CSVBuilderException e){
         }
     }
 }
