@@ -1,6 +1,6 @@
 package com.services;
 
-import com.exception.CensusAnalyserCustomException;
+import com.exception.CSVBuilderException;
 import com.model.StateCensusCSV;
 import com.model.StateDataCSV;
 
@@ -23,9 +23,9 @@ public class StateCensusAnalyser  {
             int numOfRecords = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
             return numOfRecords;
         } catch (NoSuchFileException e) {
-            throw new CensusAnalyserCustomException("ENTERED FILE IS NOT FOUND..",CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+            throw new CSVBuilderException("ENTERED FILE IS NOT FOUND..",CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
         } catch (RuntimeException e){
-            throw new CensusAnalyserCustomException("DELIMITER OR HEADER INCORRECT..",CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
         }
     }
 
@@ -37,9 +37,9 @@ public class StateCensusAnalyser  {
             int countRecord = (int) StreamSupport.stream(iterableStateCode.spliterator(), false).count();
             return countRecord;
         } catch (NoSuchFileException e) {
-            throw new CensusAnalyserCustomException("ENTERED FILE IS NOT FOUND..",CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+            throw new CSVBuilderException("ENTERED FILE IS NOT FOUND..",CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
         } catch (RuntimeException e){
-            throw new CensusAnalyserCustomException("DELIMITER OR HEADER INCORRECT..",CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
         }
     }
 }

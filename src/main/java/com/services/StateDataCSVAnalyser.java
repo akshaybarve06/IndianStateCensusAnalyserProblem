@@ -1,6 +1,6 @@
 package com.services;
 
-import com.exception.CensusAnalyserCustomException;
+import com.exception.CSVBuilderException;
 import com.model.StateDataCSV;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -18,7 +18,7 @@ public class StateDataCSVAnalyser {
             CSV_FILE_PATH = Path;
         }
 
-        public int LoadStateCodeCSVData() throws CensusAnalyserCustomException
+        public int LoadStateCodeCSVData() throws CSVBuilderException
         {
             try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH));)
             {
@@ -41,10 +41,10 @@ public class StateDataCSVAnalyser {
                 }
             }
             catch (NoSuchFileException e) {
-                throw new CensusAnalyserCustomException("FIVEN FILE IS NOT FOUND..",CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+                throw new CSVBuilderException("FIVEN FILE IS NOT FOUND..",CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
             }
             catch (RuntimeException e){
-                throw new CensusAnalyserCustomException("DELIMITER OR HEADER INCORRECT..",CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+                throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
             }
             catch (IOException e) {
                 e.printStackTrace();

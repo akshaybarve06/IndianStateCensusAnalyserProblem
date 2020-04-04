@@ -1,4 +1,4 @@
-import com.exception.CensusAnalyserCustomException;
+import com.exception.CSVBuilderException;
 import com.services.StateCensusAnalyser;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,8 +21,8 @@ public class StateCensusTest {
     public void givenStateCensusAnalyserFile_WhenImproperFile_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensus.csv");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
     }
 
@@ -31,8 +31,8 @@ public class StateCensusTest {
     public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensusData.jpg");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
     }
 
@@ -41,8 +41,8 @@ public class StateCensusTest {
     public void givenStateCensusCSV_WhenImproperFileNameDelimiter_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensusDataCopy.csv");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
     }
 
@@ -51,8 +51,8 @@ public class StateCensusTest {
     public void givenStateCensusCSV_WhenImproperFileHeaders_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.readFile("src/test/resources/StateCensusDataCopy2.csv");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
     }
     //**************************** FOR INDIAN STATE CODE ***********************************
@@ -69,8 +69,8 @@ public class StateCensusTest {
     public void givenStateCodeAnalyserFile_WhenImproperFile_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeData.csv");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
     }
 
@@ -79,8 +79,8 @@ public class StateCensusTest {
     public void givenStateCodeAnalyserFile_WhenImproperFileName_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCode.jpg");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
     }
 
@@ -89,8 +89,8 @@ public class StateCensusTest {
     public void givenStateCodeCSV_WhenImproperFileNameDelimiter_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeCopy.csv");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
     }
 
@@ -99,8 +99,8 @@ public class StateCensusTest {
     public void givenStateCodeCSV_WhenImproperFileHeaders_ReturnsException() throws Exception {
         try {
             censusAnalyserObject.loadIndianStateCodeData("src/test/resources/StateCodeCopy2.csv");
-        } catch (CensusAnalyserCustomException e) {
-            Assert.assertEquals(CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
+        } catch (CSVBuilderException e) {
+            Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
     }
 }

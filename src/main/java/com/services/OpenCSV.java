@@ -1,6 +1,6 @@
 package com.services;
 
-import com.exception.CensusAnalyserCustomException;
+import com.exception.CSVBuilderException;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -11,12 +11,12 @@ import java.util.Iterator;
 
 public class OpenCSV extends CSVInterface {
 
-    public static <E> Iterator<E> CSVfileIterator(Reader reader, Class<E> csvClass) throws CensusAnalyserCustomException {
+    public static <E> Iterator<E> CSVfileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException {
         return getCSVToBeen(reader,csvClass).iterator();
     }
 
     // Introduce CSVBeanBuilder
-    public static <E> CsvToBean<E> getCSVToBeen(Reader reader, Class<E> csvClass) throws CensusAnalyserCustomException {
+    public static <E> CsvToBean<E> getCSVToBeen(Reader reader, Class<E> csvClass) throws CSVBuilderException {
         try {
             CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder<E>(reader);
             csvToBeanBuilder.withType(csvClass);
@@ -24,7 +24,7 @@ public class OpenCSV extends CSVInterface {
             CsvToBean<E> csvToBean = csvToBeanBuilder.build();
             return csvToBean;
         } catch (RuntimeException e) {
-            throw new CensusAnalyserCustomException("DELIMITER OR HEADER INCORRECT..",CensusAnalyserCustomException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+            throw new CSVBuilderException("DELIMITER OR HEADER INCORRECT..",CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
         }
     }
 }
