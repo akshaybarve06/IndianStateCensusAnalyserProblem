@@ -5,64 +5,106 @@ import com.google.gson.Gson;
 import com.model.StateCensusCSV;
 import com.model.StateDataCSV;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 //Combined Both StateCensus and StateCode Classes Into One
 public class StateCensusAnalyser <E>{
+
         //VARIABLES
         private String CSV_FILE_PATH;
-        private final Class<E> csvClass;
-        List<E> csvUserList = null;
+
+        List<StateCensusCSV> StateCensusCSVList = null;
+        List<StateDataCSV> StateDataCSVList = null;
+
+        Map<String, StateCensusCSV> StateCensusCSVMap = null;
+        Map<String, StateDataCSV> StateDataCSVMap = null;
 
         OpenCSV openCSV = new OpenCSV();
 
         public StateCensusAnalyser(String path, Class<E> csvClass) {
             this.CSV_FILE_PATH=path;
-            this.csvClass = csvClass;
+            this.StateCensusCSVMap = new HashMap<>();
+            this.StateDataCSVMap = new HashMap<>();
         }
-
     //METHOD TO LOAD RECORDS OF CSV FILE
         public int loadRecords() throws CSVBuilderException {
             try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
                 OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
-                csvUserList = csvBuilder.getCSVFileList(reader, csvClass);
-                return csvUserList.size();
+                Iterator<StateCensusCSV> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, StateCensusCSV.class);
+                while (StateCensusCSVIterator.hasNext()) {
+                    StateCensusCSV csvStatesCensus = StateCensusCSVIterator.next();
+                    this.StateCensusCSVMap.put(csvStatesCensus.state, csvStatesCensus);
+                    StateCensusCSVList = StateCensusCSVMap.values().stream().collect(Collectors.toList());
+                }
+                int numberOfRecords = StateCensusCSVMap.size();
+                return numberOfRecords;
             } catch (NoSuchFileException e) {
-                throw new CSVBuilderException(e.getMessage(),CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+                throw new CSVBuilderException("Given File Not Found ",CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
             } catch (RuntimeException e){
-                throw new CSVBuilderException(e.getMessage(),CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+                throw new CSVBuilderException("Check Delimiters Or Headers",CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
             } catch (Exception e) {
             e.getStackTrace();
         }
         return 0;
+        }
+    //METHOD TO LOAD RECORDS OF STATE CODE
+    public int loadData() throws CSVBuilderException {
+        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+            OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
+            Iterator<StateDataCSV> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, StateDataCSV.class);
+            while (StateCensusCSVIterator.hasNext()) {
+                StateDataCSV StateDataCSV = StateCensusCSVIterator.next();
+                this.StateDataCSVMap.put(StateDataCSV.StateCode, StateDataCSV);
+                StateDataCSVList = StateDataCSVMap.values().stream().collect(Collectors.toList());
+            }
+            int numberOfRecords = StateDataCSVMap.size();
+            return numberOfRecords;
+        } catch (NoSuchFileException e) {
+            throw new CSVBuilderException("Given File Not Found ", CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+        } catch (RuntimeException e) {
+            throw new CSVBuilderException("Check Delimiters Or Headers", CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
-        public String SortedCensusData() {
-            Comparator<StateCensusCSV> CSVComparator = Comparator.comparing(census -> census.state);
-            this.sort((Comparator<E>) CSVComparator);
-            String SortedCSVJson = new Gson().toJson(csvUserList);
-            return SortedCSVJson;
+    public String SortedCensusData() throws CSVBuilderException {
+        if (StateCensusCSVList == null || StateCensusCSVList.size() == 0) {
+            throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+        }
+        Comparator<StateCensusCSV> comparator = Comparator.comparing(StateCensusCSV -> StateCensusCSV.state);
+        this.sortData(comparator, StateCensusCSVList);
+        String sortedStateCensusJson = new Gson().toJson(StateCensusCSVList);
+        return sortedStateCensusJson;
         }
 
-    public String SortedStateCodeData() {
-        Comparator<StateDataCSV> CodeComparator = Comparator.comparing(code -> code.StateCode);
-        this.sort((Comparator<E>) CodeComparator);
-        String SortedCodeJson = new Gson().toJson(csvUserList);
-        return SortedCodeJson;
+    public String SortedStateCodeData() throws CSVBuilderException {
+        if (StateDataCSVList == null || StateDataCSVList.size() == 0) {
+            throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+        }
+        Comparator<StateDataCSV> comparator = Comparator.comparing(StateDataCSV -> StateDataCSV.StateCode);
+        this.sortData(comparator, StateDataCSVList);
+        String sortedStateCodeJson = new Gson().toJson(StateDataCSVList);
+        return sortedStateCodeJson;
     }
 
-    private void sort(Comparator<E> csvComparator) {
-        for (int i = 0; i < csvUserList.size() - 1; i++) {
-            for (int j = 0; j < csvUserList.size() - i - 1; j++) {
-                E census1 = csvUserList.get(j);
-                E census2 = csvUserList.get(j + 1);
+    private<E> void sortData(Comparator<E> csvComparator, List<E> list)
+    {
+        for (int i = 0; i < list.size() - 1; i++)
+        {
+            for (int j = 0; j < list.size() - i - 1; j++)
+            {
+                E census1 = list.get(j);
+                E census2 = list.get(j + 1);
                 if (csvComparator.compare(census1, census2) > 0) {
-                    csvUserList.set(j, census2);
-                    csvUserList.set(j + 1, census1);
+                    list.set(j, census2);
+                    list.set(j + 1, census1);
                 }
             }
         }

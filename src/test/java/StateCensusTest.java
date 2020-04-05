@@ -8,7 +8,6 @@ import org.junit.Test;
 
 public class StateCensusTest {
 
-//
     //**************************** FOR INDIAN STATE CENSUS ***********************************
 
     // TC-1 READ CSV FILE IF NUMBER OF RECORDS MATCHES
@@ -76,7 +75,7 @@ public class StateCensusTest {
         final String CSV_FILE_PATH = "src/test/resources/StateCode.csv";
         try {
             StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser(CSV_FILE_PATH, StateDataCSV.class);
-            int numberOfRecords = stateCensusAnalyzer.loadRecords();
+            int numberOfRecords = stateCensusAnalyzer.loadData();
             Assert.assertEquals(37, numberOfRecords);
         } catch (CSVBuilderException e) {
         }
@@ -88,7 +87,7 @@ public class StateCensusTest {
         final String CSV_FILE_PATH = "src/test/resources/StateCodeData.csv";
         StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser(CSV_FILE_PATH, StateDataCSV.class);
         try {
-           stateCensusAnalyzer.loadRecords();
+           stateCensusAnalyzer.loadData();
         } catch (CSVBuilderException e) {
             Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
@@ -100,7 +99,7 @@ public class StateCensusTest {
          final String CSV_FILE_PATH = "src/test/resources/StateCode.jpg";
         StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser(CSV_FILE_PATH, StateDataCSV.class);
         try {
-           stateCensusAnalyzer.loadRecords();
+           stateCensusAnalyzer.loadData();
         } catch (CSVBuilderException e) {
             Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION, e.typeOfException);
         }
@@ -112,7 +111,7 @@ public class StateCensusTest {
         final String CSV_FILE_PATH = "src/test/resources/StateCodeCopy.csv";
         StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser(CSV_FILE_PATH, StateDataCSV.class);
         try {
-            stateCensusAnalyzer.loadRecords();
+            stateCensusAnalyzer.loadData();
         } catch (CSVBuilderException e) {
             Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
@@ -124,7 +123,7 @@ public class StateCensusTest {
         final String CSV_FILE_PATH = "src/test/resources/StateCodeCopy2.csv";
         StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser(CSV_FILE_PATH, StateDataCSV.class);
         try {
-                   stateCensusAnalyzer.loadRecords();
+                   stateCensusAnalyzer.loadData();
         } catch (CSVBuilderException e) {
             Assert.assertEquals(CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION,e.typeOfException);
         }
@@ -148,7 +147,7 @@ public class StateCensusTest {
         final String CSV_FILE_PATH = "src/test/resources/StateCode.csv";
         try {
             StateCensusAnalyser stateCensusAnalyzer = new StateCensusAnalyser(CSV_FILE_PATH, StateDataCSV.class);
-            stateCensusAnalyzer.loadRecords();
+            stateCensusAnalyzer.loadData();
             String SortedData = stateCensusAnalyzer.SortedStateCodeData();
             StateDataCSV[] StateCodes = new Gson().fromJson(SortedData, StateDataCSV[].class);
             Assert.assertEquals("AD", StateCodes[0].StateCode);
