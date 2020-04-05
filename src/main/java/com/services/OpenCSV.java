@@ -26,6 +26,5 @@ public class OpenCSV implements CSVInterface {
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
             return csvToBean.parse();
-
     }
 }
