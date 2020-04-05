@@ -16,46 +16,48 @@ import java.util.stream.Collectors;
 //Combined Both StateCensus and StateCode Classes Into One
 public class StateCensusAnalyser <E>{
 
-        //VARIABLES
-        private String CSV_FILE_PATH;
+    //VARIABLES
+    private String CSV_FILE_PATH;
 
-        List<StateCensusCSV> StateCensusCSVList = null;
-        List<StateDataCSV> StateDataCSVList = null;
+    List<StateCensusCSV> StateCensusCSVList = null;
+    List<StateDataCSV> StateDataCSVList = null;
+    Map<String, StateCensusCSV> StateCensusCSVMap = null;
+    Map<String, StateDataCSV> StateDataCSVMap = null;
 
-        Map<String, StateCensusCSV> StateCensusCSVMap = null;
-        Map<String, StateDataCSV> StateDataCSVMap = null;
+    OpenCSV openCSV = new OpenCSV();
 
-        OpenCSV openCSV = new OpenCSV();
-
-        public StateCensusAnalyser(String path, Class<E> csvClass) {
-            this.CSV_FILE_PATH=path;
-            this.StateCensusCSVMap = new HashMap<>();
-            this.StateDataCSVMap = new HashMap<>();
-        }
+    public StateCensusAnalyser() {
+        this.StateCensusCSVMap = new HashMap<>();
+        this.StateDataCSVMap = new HashMap<>();
+    }
     //METHOD TO LOAD RECORDS OF CSV FILE
-        public int loadRecords() throws CSVBuilderException {
-            try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-                OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
-                Iterator<StateCensusCSV> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, StateCensusCSV.class);
-                while (StateCensusCSVIterator.hasNext()) {
-                    StateCensusCSV csvStatesCensus = StateCensusCSVIterator.next();
-                    this.StateCensusCSVMap.put(csvStatesCensus.state, csvStatesCensus);
-                    StateCensusCSVList = StateCensusCSVMap.values().stream().collect(Collectors.toList());
-                }
-                int numberOfRecords = StateCensusCSVMap.size();
-                return numberOfRecords;
-            } catch (NoSuchFileException e) {
-                throw new CSVBuilderException("Given File Not Found ",CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
-            } catch (RuntimeException e){
-                throw new CSVBuilderException("Check Delimiters Or Headers",CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
-            } catch (Exception e) {
-            e.getStackTrace();
-        }
-        return 0;
-        }
+    public int loadRecords(String path) throws CSVBuilderException
+    {
+        try (Reader reader = Files.newBufferedReader(Paths.get(path)))
+        {
+            OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
+            Iterator<StateCensusCSV> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, StateCensusCSV.class);
+            while (StateCensusCSVIterator.hasNext()) {
+                StateCensusCSV csvStatesCensus = StateCensusCSVIterator.next();
+                this.StateCensusCSVMap.put(csvStatesCensus.state, csvStatesCensus);
+                StateCensusCSVList = StateCensusCSVMap.values().stream().collect(Collectors.toList());
+            }
+            int numberOfRecords = StateCensusCSVMap.size();
+            return numberOfRecords;
+        } catch (NoSuchFileException e) {
+            throw new CSVBuilderException("Given File Not Found ",CSVBuilderException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
+        } catch (RuntimeException e){
+            throw new CSVBuilderException("Check Delimiters Or Headers",CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
+        } catch (Exception e) {
+        e.getStackTrace();
+    }
+    return 0;
+    }
     //METHOD TO LOAD RECORDS OF STATE CODE
-    public int loadData() throws CSVBuilderException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+    public int loadData(String path) throws CSVBuilderException
+    {
+        try (Reader reader = Files.newBufferedReader(Paths.get(path)))
+        {
             OpenCSV csvBuilder = CSVBuilderFactory.createCsvBuilder();
             Iterator<StateDataCSV> StateCensusCSVIterator = csvBuilder.getCSVFileIterator(reader, StateDataCSV.class);
             while (StateCensusCSVIterator.hasNext()) {
@@ -74,8 +76,10 @@ public class StateCensusAnalyser <E>{
         }
         return 0;
     }
-    public String SortedCensusData() throws CSVBuilderException {
-        if (StateCensusCSVList == null || StateCensusCSVList.size() == 0) {
+    public String SortedCensusData() throws CSVBuilderException
+    {
+        if (StateCensusCSVList == null || StateCensusCSVList.size() == 0)
+        {
             throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
         }
         Comparator<StateCensusCSV> comparator = Comparator.comparing(StateCensusCSV -> StateCensusCSV.state);
@@ -84,8 +88,10 @@ public class StateCensusAnalyser <E>{
         return sortedStateCensusJson;
         }
 
-    public String SortedStateCodeData() throws CSVBuilderException {
-        if (StateDataCSVList == null || StateDataCSVList.size() == 0) {
+    public String SortedStateCodeData() throws CSVBuilderException
+    {
+        if (StateDataCSVList == null || StateDataCSVList.size() == 0)
+        {
             throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
         }
         Comparator<StateDataCSV> comparator = Comparator.comparing(StateDataCSV -> StateDataCSV.StateCode);
