@@ -11,7 +11,7 @@ public class StateCensusCSV {
     public String state;
 
     @CsvBindByName(column = "Population")
-    public int population;
+    public int Population;
 
     @CsvBindByName(column = "AreaInSqKm")
     public int AreaInSqKm;

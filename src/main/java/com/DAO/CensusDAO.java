@@ -1,18 +1,27 @@
 package com.DAO;
 
 import com.model.StateCensusCSV;
+import com.model.StateDataCSV;
 
 public class CensusDAO {
-    public String state;
-    public int population;
-    public int area;
-    public int density;
-    public String stateCode;
+    public String State;
+    public long Population;
+    public long AreaInSqKm;
+    public int DensityPerSqkm;
+    public String StateCode;
+    public int TIN;
+    public int SrNo;
 
     public CensusDAO(StateCensusCSV stateCensusCSV) {
-        this.state = stateCensusCSV.state;
-        this.population = stateCensusCSV.population;
-        this.area = stateCensusCSV. AreaInSqKm;
-        this.density = stateCensusCSV. DensityPerSqKm;
+        this.State = stateCensusCSV.state;
+        this.Population = stateCensusCSV.Population;
+        this.AreaInSqKm = stateCensusCSV. AreaInSqKm;
+        this.DensityPerSqkm = stateCensusCSV. DensityPerSqKm;
+    }
+    public CensusDAO(StateDataCSV stateDataCSV) {
+        this.State = stateDataCSV.StateName;
+        this.SrNo = stateDataCSV.SrNo;
+        this.TIN = stateDataCSV.TIN;
+        this.StateCode = stateDataCSV.StateCode;
     }
 }
