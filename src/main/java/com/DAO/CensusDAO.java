@@ -3,13 +3,14 @@ package com.DAO;
 import com.model.StateCensusCSV;
 import com.model.StateDataCSV;
 import com.model.USCensusCSV;
+import com.services.CensusAnalyser;
 
 public class CensusDAO {
     public String StateID;
     public String StateName;
     public long Population;
     public long AreaInSqKm;
-    public int DensityPerSqKm;
+    public long DensityPerSqKm;
     public String StateCode;
     public float HousingDensity;
     public int TIN;
@@ -34,5 +35,36 @@ public class CensusDAO {
         this.AreaInSqKm= usCensusCSV.Area;
         this.DensityPerSqKm = usCensusCSV.PopulationDensity;
         this.HousingDensity = usCensusCSV.HousingDensity;
+    }
+    public long getPopulation() {
+        return Population;
+    }
+
+    public void setPopulation(long population) {
+        Population = population;
+    }
+
+    public long getAreaInSqKm() {
+        return AreaInSqKm;
+    }
+
+    public void setAreaInSqKm(long areaInSqKm) {
+        AreaInSqKm = areaInSqKm;
+    }
+
+    public long getDensityPerSqkm() {
+        return DensityPerSqKm;
+    }
+
+    public void setDensityPerSqKm(long densityPerSqkm) {
+        DensityPerSqKm = densityPerSqkm;
+    }
+
+    public Object getCensusModel(CensusAnalyser.Country country) {
+        if (country.equals(CensusAnalyser.Country.INDIA))
+            return new StateCensusCSV(StateName, Population, AreaInSqKm, DensityPerSqKm);
+        if (country.equals(CensusAnalyser.Country.US))
+            return new USCensusCSV(StateCode, StateName, Population, AreaInSqKm, DensityPerSqKm);
+        return null;
     }
 }
