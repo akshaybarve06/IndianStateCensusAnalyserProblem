@@ -7,8 +7,8 @@ public class StateCensusCSV {
 
     //Variables to Bind with Header of CSV
 
-    @CsvBindByName(column = "State")
-    public String state;
+    @CsvBindByName(column = "StateName")
+    public String StateName;
 
     @CsvBindByName(column = "Population")
     public int Population;
@@ -18,4 +18,15 @@ public class StateCensusCSV {
 
     @CsvBindByName(column = "DensityPerSqKm")
     public int DensityPerSqKm;
+
+    public StateCensusCSV(String name, int population, int area, int density ){
+        StateName=name;
+        Population=population;
+        AreaInSqKm=area;
+        DensityPerSqKm= density;
+    }
+    @Override
+    public String toString(){
+        return "StateCensusCSV Data { " + "State Population : " +Population + ",State AreaInSqKm : " +AreaInSqKm + ",State DensityPerSqKm : " +DensityPerSqKm + "}";
+    }
 }

@@ -16,4 +16,14 @@ public class StateDataCSV {
 
         @CsvBindByName(column = "TIN")
         public int TIN;
+
+        public StateDataCSV(int no, String name, String code, int tin){
+            SrNo=no;
+            StateName=name;
+            StateCode=code;
+            TIN=tin;
+        }
+        public String toString(){
+            return "StateCodeCSV { " + "State Number :" +SrNo + ", State Name : " +StateName + ", State Code : " +StateCode + ", TIN : " +TIN + "}";
+        }
 }

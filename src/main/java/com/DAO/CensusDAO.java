@@ -7,16 +7,16 @@ public class CensusDAO {
     public String State;
     public long Population;
     public long AreaInSqKm;
-    public int DensityPerSqkm;
+    public int DensityPerSqKm;
     public String StateCode;
     public int TIN;
     public int SrNo;
 
     public CensusDAO(StateCensusCSV stateCensusCSV) {
-        this.State = stateCensusCSV.state;
+        this.State = stateCensusCSV.StateName;
         this.Population = stateCensusCSV.Population;
         this.AreaInSqKm = stateCensusCSV. AreaInSqKm;
-        this.DensityPerSqkm = stateCensusCSV. DensityPerSqKm;
+        this.DensityPerSqKm = stateCensusCSV. DensityPerSqKm;
     }
     public CensusDAO(StateDataCSV stateDataCSV) {
         this.State = stateDataCSV.StateName;
