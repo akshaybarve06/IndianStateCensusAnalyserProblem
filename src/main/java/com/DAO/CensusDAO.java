@@ -5,6 +5,8 @@ import com.DTO.StateDataCSV;
 import com.DTO.USCensusCSV;
 import com.services.CensusAnalyser;
 
+import java.util.Comparator;
+
 public class CensusDAO {
     public String StateID;
     public String StateName;
@@ -23,8 +25,8 @@ public class CensusDAO {
         this.DensityPerSqKm = stateCensusCSV. DensityPerSqKm;
     }
     public CensusDAO(StateDataCSV stateDataCSV) {
-        this.StateName = stateDataCSV.StateName;
         this.SrNo = stateDataCSV.SrNo;
+        this.StateName = stateDataCSV.StateName;
         this.TIN = stateDataCSV.TIN;
         this.StateCode = stateDataCSV.StateCode;
     }
@@ -32,10 +34,22 @@ public class CensusDAO {
         this.StateID = usCensusCSV.StateID;
         this.StateName = usCensusCSV.StateName;
         this.Population = usCensusCSV.Population;
-        this.AreaInSqKm= usCensusCSV.Area;
+        this.AreaInSqKm = usCensusCSV.Area;
         this.DensityPerSqKm = usCensusCSV.PopulationDensity;
         this.HousingDensity = usCensusCSV.HousingDensity;
     }
+    public static Comparator<CensusDAO> getSortComparator(CensusAnalyser.SortingMode mode) {
+        if (mode.equals(CensusAnalyser.SortingMode.STATENAME))
+            return Comparator.comparing(census -> census.StateName);
+        if (mode.equals(CensusAnalyser.SortingMode.POPULATION))
+            return Comparator.comparing(CensusDAO::getPopulation).reversed();
+        if (mode.equals(CensusAnalyser.SortingMode.AREA))
+            return Comparator.comparing(CensusDAO::getAreaInSqKm).reversed();
+        if (mode.equals(CensusAnalyser.SortingMode.DENSITY))
+            return Comparator.comparing(CensusDAO::getDensityPerSqkm).reversed();
+        return null;
+    }
+
     public long getPopulation() {
         return Population;
     }
@@ -56,8 +70,8 @@ public class CensusDAO {
         return DensityPerSqKm;
     }
 
-    public void setDensityPerSqKm(long densityPerSqkm) {
-        DensityPerSqKm = densityPerSqkm;
+    public void setDensityPerSqKm(long densityPerSqKm) {
+        DensityPerSqKm = densityPerSqKm;
     }
 
     public Object getCensusDTO(CensusAnalyser.Country country) {
