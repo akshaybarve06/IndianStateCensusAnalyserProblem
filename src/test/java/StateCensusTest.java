@@ -146,13 +146,25 @@ public class StateCensusTest {
         }
     }
     @Test
-    public void givenStateCensusData_WhenBasedSortSorted_ReturnSortedResult() {
+    public void givenStateCensusData_WhenSortByPopulation_ReturnSortedResult() {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
         try {
             stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
-            String sortedCensusData = stateCensusAnalyzer.sortedPopulationWiseData();
-            StateCensusCSV[] statesCensusCSV = new Gson().fromJson(sortedCensusData, StateCensusCSV[].class);
-            Assert.assertEquals(199812341, statesCensusCSV[0].Population);
+            String sortedCensusData = stateCensusAnalyzer.sortedDataPopulationWise();
+            StateCensusCSV[] stateCensusCSV = new Gson().fromJson(sortedCensusData, StateCensusCSV[].class);
+            Assert.assertEquals(199812341, stateCensusCSV[0].Population);
+        } catch ( CSVBuilderException e) {
+            e.getStackTrace();
+        }
+    }
+    @Test
+    public void givenStateCensusData_WhenSortByDensity_ReturnSortedResult() throws CSVBuilderException{
+        final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
+        try {
+            stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
+            String sortedCensusData = stateCensusAnalyzer.sortedDataDensityWise();
+            StateCensusCSV[] stateCensusCSV = new Gson().fromJson(sortedCensusData, StateCensusCSV[].class);
+            Assert.assertEquals(1102, stateCensusCSV[0].DensityPerSqKm);
         } catch ( CSVBuilderException e) {
             e.getStackTrace();
         }

@@ -12,19 +12,27 @@ import java.util.List;
 public class OpenCSV implements CSVInterface {
 
     @Override
-    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) {
-            CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
+    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException {
+    try{
+        CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(csvClass)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
             return csvToBean.iterator();
+    }catch (IllegalStateException e){
+        throw new CSVBuilderException( "Unable To Parse File", CSVBuilderException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
+    }
     }
     @Override
-    public <E> List<E> getCSVFileList(Reader reader, Class<E> csvClass)  {
+    public <E> List<E> getCSVFileList(Reader reader, Class<E> csvClass) throws CSVBuilderException {
+        try {
             CsvToBean csvToBean = new CsvToBeanBuilder(reader)
                     .withType(csvClass)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
             return csvToBean.parse();
+        }catch (IllegalStateException e){
+            throw new CSVBuilderException( "Unable To Parse File", CSVBuilderException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
+        }
     }
 }
