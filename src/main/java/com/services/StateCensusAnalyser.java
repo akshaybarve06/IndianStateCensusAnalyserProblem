@@ -123,6 +123,17 @@ public class StateCensusAnalyser <E>{
         String sortedStateCensusJson = new Gson().toJson(list);
         return sortedStateCensusJson;
     }
+    //METHOD FOR SORTING STATE CENSUS DATA CSV FILE BY AREA WISE
+    public String sortedDataAreaWise() throws CSVBuilderException {
+        if (list == null || list.size() == 0) {
+            throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+        }
+        Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.AreaInSqKm);
+        this.sortData(censusComparator);
+        Collections.reverse(list);
+        String sortedStateCensusJson = new Gson().toJson(list);
+        return sortedStateCensusJson;
+    }
 
    private void sortData(Comparator<CensusDAO> csvComparator)
     {

@@ -122,6 +122,7 @@ public class StateCensusTest {
         }
     }
 
+    // Test Case For Sorting Data By State Name
     @Test
     public void givenIndianStateCensusData_WhenSorted_ReturnSortedResult(){
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
@@ -132,8 +133,10 @@ public class StateCensusTest {
             Assert.assertEquals("Andhra Pradesh", censusCSV[0].state);
         }
         catch (CSVBuilderException e){
+            e.getStackTrace();
         }
     }
+    // Test Case For Sorting Data By StateCode
     @Test
     public void givenStateCodeData_WhenSorted_ShouldReturnSortedList(){
         final String CSV_FILE_PATH = "src/test/resources/StateCode.csv";
@@ -143,8 +146,10 @@ public class StateCensusTest {
             StateDataCSV[] StateCodes = new Gson().fromJson(SortedData, StateDataCSV[].class);
             Assert.assertEquals("AD", StateCodes[0].StateCode);
         }catch(CSVBuilderException e){
+            e.getStackTrace();
         }
     }
+    // Test Case For Sorting Data By Population
     @Test
     public void givenStateCensusData_WhenSortByPopulation_ReturnSortedResult() {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
@@ -157,14 +162,28 @@ public class StateCensusTest {
             e.getStackTrace();
         }
     }
+    // Test Case For Sorting Data By Density
     @Test
-    public void givenStateCensusData_WhenSortByDensity_ReturnSortedResult() throws CSVBuilderException{
+    public void givenStateCensusData_WhenSortByDensity_ReturnSortedResult() {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
         try {
             stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
             String sortedCensusData = stateCensusAnalyzer.sortedDataDensityWise();
             StateCensusCSV[] stateCensusCSV = new Gson().fromJson(sortedCensusData, StateCensusCSV[].class);
             Assert.assertEquals(1102, stateCensusCSV[0].DensityPerSqKm);
+        } catch ( CSVBuilderException e) {
+            e.getStackTrace();
+        }
+    }
+    // Test Case For Sorting Data By Area
+    @Test
+    public void givenStateCensusData_WhenSortByArea_ReturnSortedResult() {
+        final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
+        try {
+            stateCensusAnalyzer.loadRecords(CSV_FILE_PATH);
+            String sortedCensusData = stateCensusAnalyzer.sortedDataAreaWise();
+            StateCensusCSV[] stateCensusCSV = new Gson().fromJson(sortedCensusData, StateCensusCSV[].class);
+            Assert.assertEquals(342239, stateCensusCSV[0].AreaInSqKm);
         } catch ( CSVBuilderException e) {
             e.getStackTrace();
         }
