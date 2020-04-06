@@ -1,7 +1,7 @@
 package com.services;
 
 public class CSVBuilderFactory {
-    public static OpenCSV createCsvBuilder(){
+    public static OpenCSV createCSVBuilder(){
         return new OpenCSV();
     }
 }
