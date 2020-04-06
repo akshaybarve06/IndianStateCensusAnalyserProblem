@@ -24,4 +24,5 @@ public class CensusDAO {
         this.TIN = stateDataCSV.TIN;
         this.StateCode = stateDataCSV.StateCode;
     }
+
 }
