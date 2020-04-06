@@ -2,7 +2,7 @@ package com.adapter;
 
 import com.DAO.CensusDAO;
 import com.exception.CSVBuilderException;
-import com.model.USCensusCSV;
+import com.DTO.USCensusCSV;
 
 import java.util.Map;
 

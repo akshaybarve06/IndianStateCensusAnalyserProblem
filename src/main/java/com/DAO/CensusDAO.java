@@ -1,8 +1,8 @@
 package com.DAO;
 
-import com.model.StateCensusCSV;
-import com.model.StateDataCSV;
-import com.model.USCensusCSV;
+import com.DTO.StateCensusCSV;
+import com.DTO.StateDataCSV;
+import com.DTO.USCensusCSV;
 import com.services.CensusAnalyser;
 
 public class CensusDAO {
@@ -60,7 +60,7 @@ public class CensusDAO {
         DensityPerSqKm = densityPerSqkm;
     }
 
-    public Object getCensusModel(CensusAnalyser.Country country) {
+    public Object getCensusDTO(CensusAnalyser.Country country) {
         if (country.equals(CensusAnalyser.Country.INDIA))
             return new StateCensusCSV(StateName, Population, AreaInSqKm, DensityPerSqKm);
         if (country.equals(CensusAnalyser.Country.US))

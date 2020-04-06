@@ -1,13 +1,11 @@
 import com.exception.CSVBuilderException;
 import com.google.gson.Gson;
-import com.model.StateCensusCSV;
-import com.model.StateDataCSV;
-import com.model.USCensusCSV;
+import com.DTO.StateCensusCSV;
+import com.DTO.StateDataCSV;
+import com.DTO.USCensusCSV;
 import com.services.CensusAnalyser;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.io.IOException;
 
 public class StateCensusTest {
 

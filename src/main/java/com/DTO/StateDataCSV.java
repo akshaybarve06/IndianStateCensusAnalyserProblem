@@ -1,4 +1,4 @@
-package com.model;
+package com.DTO;
 
 import com.opencsv.bean.CsvBindByName;
 //StateDataCSV POJO Class

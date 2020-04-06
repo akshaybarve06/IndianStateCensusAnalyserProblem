@@ -2,8 +2,8 @@ package com.adapter;
 
 import com.DAO.CensusDAO;
 import com.exception.CSVBuilderException;
-import com.model.StateCensusCSV;
-import com.model.USCensusCSV;
+import com.DTO.StateCensusCSV;
+import com.DTO.USCensusCSV;
 import com.services.CSVBuilderFactory;
 import com.services.OpenCSV;
 
