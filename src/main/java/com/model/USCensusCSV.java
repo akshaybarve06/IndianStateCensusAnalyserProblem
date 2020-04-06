@@ -7,8 +7,8 @@ public class USCensusCSV {
         @CsvBindByName(column = "State Id")
         public String StateID;
 
-        @CsvBindByName(column = "State")
-        public String State;
+        @CsvBindByName(column = "StateName")
+        public String StateName;
 
         @CsvBindByName(column = "Population Density")
         public int PopulationDensity;
@@ -30,4 +30,15 @@ public class USCensusCSV {
 
         @CsvBindByName(column = "Housing Density")
         public float HousingDensity;
+
+        public USCensusCSV(String name,long population, long area, int populationDensity){
+                StateName=name;
+                Population = population;
+                Area = area;
+                PopulationDensity = populationDensity;
+        }
+        @Override
+        public String toString() {
+                return "USCensusCSV{" + "State=" + StateName + "Population=" + Population + ", Area=" + Area + ", PopulationDensity=" + PopulationDensity + '}';
+        }
 }

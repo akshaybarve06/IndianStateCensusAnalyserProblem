@@ -29,16 +29,16 @@ public abstract class CensusAdapter {
             OpenCSV csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<E> stateCensusIterator = csvBuilder.getIterator(reader, censusCSVClass);
             Iterable<E> stateCensuses = () -> stateCensusIterator;
-            if (censusCSVClass.getName().contains("CsvStatesCensus"))
+            if (censusCSVClass.getName().contains("StateCensusCSV"))
             {
                 StreamSupport.stream(stateCensuses.spliterator(), false)
                         .map(StateCensusCSV.class::cast)
                         .forEach(censusCSV -> censusDAOMap.put(censusCSV.StateName, new CensusDAO(censusCSV)));
-            } else if (censusCSVClass.getName().contains("CSVUSCensus"))
+            } else if (censusCSVClass.getName().contains("USStateCensus"))
             {
                 StreamSupport.stream(stateCensuses.spliterator(), false)
                         .map(USCensusCSV.class::cast)
-                        .forEach(censusCSV -> censusDAOMap.put(censusCSV.State, new CensusDAO(censusCSV)));
+                        .forEach(censusCSV -> censusDAOMap.put(censusCSV.StateName, new CensusDAO(censusCSV)));
             }
             return censusDAOMap;
         } catch (NoSuchFileException e) {
@@ -46,7 +46,7 @@ public abstract class CensusAdapter {
         } catch (RuntimeException e) {
             throw new CSVBuilderException("Check Delimiters Or Headers", CSVBuilderException.TypeOfExceptionThrown.DELIMITER_HEADER_INCORRECT_EXCEPTION);
         } catch (IOException e) {
-            e.getStackTrace();
+            e.printStackTrace();
         }
         return censusDAOMap;
     }

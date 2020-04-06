@@ -35,7 +35,7 @@ public class CensusAnalyser <E>{
         {
             throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
         }
-        Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.State);
+        Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.StateName);
         this.sortData(censusComparator);
         String sortedStateCensusJson = new Gson().toJson(censusList);
         return sortedStateCensusJson;

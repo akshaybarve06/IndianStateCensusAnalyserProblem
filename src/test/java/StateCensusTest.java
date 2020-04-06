@@ -2,6 +2,7 @@ import com.exception.CSVBuilderException;
 import com.google.gson.Gson;
 import com.model.StateCensusCSV;
 import com.model.StateDataCSV;
+import com.model.USCensusCSV;
 import com.services.CensusAnalyser;
 import org.junit.Assert;
 import org.junit.Test;
@@ -197,9 +198,23 @@ public class StateCensusTest {
         final String CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
         try {
             int noOfRecords = censusAnalyzer.loadStateCensusCSVData(CensusAnalyser.Country.US, CSV_FILE_PATH);
-            Assert.assertEquals(51, noOfRecords);
+            Assert.assertEquals(52, noOfRecords);
         } catch (CSVBuilderException e) {
         }
     }
+    // Test Case For Sort The Data of USCensusCSV By Population
+    @Test
+    public void givenUSCensusData_WhenSortedByPopulation_ReturnSortedResult() {
+        final String CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
+        try {
+            censusAnalyzer.loadStateCensusCSVData(CensusAnalyser.Country.US, CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyzer.sortedDataPopulationWise();
+            USCensusCSV[] csvUsCensus = new Gson().fromJson(sortedCensusData,USCensusCSV[].class);
+            Assert.assertEquals("California",csvUsCensus[0].StateName);
+        } catch ( CSVBuilderException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
