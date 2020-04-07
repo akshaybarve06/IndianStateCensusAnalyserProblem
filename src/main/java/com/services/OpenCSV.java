@@ -1,6 +1,6 @@
 package com.services;
 
-import com.exception.CSVBuilderException;
+import com.exception.StateCensusException;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class OpenCSV implements CSVInterface {
 
     @Override
-    public <E> Iterator<E> getIterator(Reader reader, Class<E> csvClass) throws CSVBuilderException {
+    public <E> Iterator<E> getIterator(Reader reader, Class<E> csvClass) throws StateCensusException {
     try{
         CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(csvClass)
@@ -20,11 +20,11 @@ public class OpenCSV implements CSVInterface {
                     .build();
             return csvToBean.iterator();
     }catch (IllegalStateException e){
-        throw new CSVBuilderException( "Unable To Parse File", CSVBuilderException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
+        throw new StateCensusException( "Unable To Parse File", StateCensusException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
     }
     }
     @Override
-    public <E> List<E> getList(Reader reader, Class<E> csvClass) throws CSVBuilderException {
+    public <E> List<E> getList(Reader reader, Class<E> csvClass) throws StateCensusException {
         try {
             CsvToBean csvToBean = new CsvToBeanBuilder(reader)
                     .withType(csvClass)
@@ -32,7 +32,7 @@ public class OpenCSV implements CSVInterface {
                     .build();
             return csvToBean.parse();
         }catch (IllegalStateException e){
-            throw new CSVBuilderException( "Unable To Parse File", CSVBuilderException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
+            throw new StateCensusException( "Unable To Parse File", StateCensusException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
         }
     }
 }

@@ -19,6 +19,9 @@ public class StateCensusCSV {
     @CsvBindByName(column = "DensityPerSqKm")
     public long DensityPerSqKm;
 
+    public StateCensusCSV(){
+    }
+
     public StateCensusCSV(String name, long population, long area, long density ){
         StateName=name;
         Population=population;

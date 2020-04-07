@@ -19,9 +19,6 @@ public class USCensusCSV {
         @CsvBindByName(column = "Total area")
         public long Area;
 
-        @CsvBindByName(column = "Housing Density")
-        public float HousingDensity;
-
         public USCensusCSV(String stateId, String state, long population, long totalArea, long populationDensity) {
                 this.StateID = stateId;
                 this.StateName = state;

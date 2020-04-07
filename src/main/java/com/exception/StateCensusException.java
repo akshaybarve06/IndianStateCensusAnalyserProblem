@@ -1,6 +1,6 @@
 package com.exception;
 
-public class CSVBuilderException extends Exception{
+public class StateCensusException extends Exception{
     public enum TypeOfExceptionThrown{
         FILE_NOT_FOUND_EXCEPTION,
         DELIMITER_HEADER_INCORRECT_EXCEPTION,
@@ -11,7 +11,7 @@ public class CSVBuilderException extends Exception{
         }
     public TypeOfExceptionThrown typeOfException;
 
-    public CSVBuilderException(String message, TypeOfExceptionThrown typeOfException) {
+    public StateCensusException(String message, TypeOfExceptionThrown typeOfException) {
         super(message);
         this.typeOfException = typeOfException;
     }

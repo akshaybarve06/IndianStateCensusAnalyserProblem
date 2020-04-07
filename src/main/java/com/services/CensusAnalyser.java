@@ -2,7 +2,7 @@ package com.services;
 
 import com.DAO.CensusDAO;
 import com.adapter.CensusAdapterFactory;
-import com.exception.CSVBuilderException;
+import com.exception.StateCensusException;
 import com.google.gson.Gson;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,23 +17,24 @@ public class CensusAnalyser <E>{
 
     private Country country;
     //CONSTRUCTOR
+
     public CensusAnalyser(Country country) {
         this.country = country;
     }
 
     //METHOD TO LOAD RECORDS OF CSV FILE
-    public int loadStateCensusCSVData(Country country, String... csvFilePath) throws CSVBuilderException
+    public int loadStateCensusCSVData(Country country, String... csvFilePath) throws StateCensusException
     {
         censusDAOMap = CensusAdapterFactory.getCensusData(country, csvFilePath);
         censusList = censusDAOMap.values().stream().collect(Collectors.toList());
         return censusDAOMap.size();
     }
     //METHOD TO LOAD STATE CODE CSV DATA AND COUNT NUMBER OF RECORD IN CSV FILE
-    public String sortedStateCensusData(SortingMode mode) throws CSVBuilderException
+    public String sortedStateCensusData(SortingMode mode) throws StateCensusException
     {
         if (censusList == null || censusList.size() == 0)
         {
-            throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+            throw new StateCensusException( "Census Data Not Found", StateCensusException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
         }
         ArrayList arrayList = censusDAOMap.values().stream()
                 .sorted(CensusDAO.getSortComparator(mode))
@@ -41,11 +42,11 @@ public class CensusAnalyser <E>{
                 .collect(Collectors.toCollection(ArrayList::new));
         return new Gson().toJson(arrayList);
     }
-    public String sortedDataPopulationWise() throws CSVBuilderException
+    public String sortedDataPopulationWise() throws StateCensusException
     {
         if (censusList == null || censusList.size() == 0)
         {
-            throw new CSVBuilderException( "Census Data Not Found", CSVBuilderException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+            throw new StateCensusException( "Census Data Not Found", StateCensusException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
         }
         Comparator<CensusDAO> censusComparator = Comparator.comparing(CensusDAO -> CensusDAO.Population);
         this.sortData(censusComparator);
