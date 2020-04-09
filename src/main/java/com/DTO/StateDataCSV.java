@@ -1,6 +1,7 @@
 package com.DTO;
 
 import com.opencsv.bean.CsvBindByName;
+
 //StateDataCSV POJO Class
 public class StateDataCSV {
 
@@ -17,7 +18,7 @@ public class StateDataCSV {
         @CsvBindByName(column = "TIN")
         public int TIN;
 
-        public String toString(){
+        public String toString() {
             return "StateCodeCSV { " + "State Number :" +SrNo + ", State Name : " +StateName + ", State Code : " +StateCode + ", TIN : " +TIN + "}";
         }
 }

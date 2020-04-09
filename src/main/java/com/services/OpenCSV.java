@@ -12,26 +12,30 @@ import java.util.List;
 public class OpenCSV implements CSVInterface {
 
     @Override
-    public <E> Iterator<E> getIterator(Reader reader, Class<E> csvClass) throws StateCensusException {
-    try{
-        CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(csvClass)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-            return csvToBean.iterator();
-    }catch (IllegalStateException e){
-        throw new StateCensusException( "Unable To Parse File", StateCensusException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
-    }
+    public <E> Iterator<E> getIterator(Reader reader, Class<E> csvClass) throws StateCensusException
+    {
+        try
+        {
+            CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader)
+                        .withType(csvClass)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .build();
+                return csvToBean.iterator();
+        } catch (IllegalStateException e) {
+            throw new StateCensusException( "Unable To Parse File", StateCensusException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
+        }
     }
     @Override
-    public <E> List<E> getList(Reader reader, Class<E> csvClass) throws StateCensusException {
-        try {
+    public <E> List<E> getList(Reader reader, Class<E> csvClass) throws StateCensusException
+    {
+        try
+        {
             CsvToBean csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(csvClass)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
+                .withType(csvClass)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build();
             return csvToBean.parse();
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             throw new StateCensusException( "Unable To Parse File", StateCensusException.TypeOfExceptionThrown.UNABLE_TO_PARSE_EXCEPTION);
         }
     }

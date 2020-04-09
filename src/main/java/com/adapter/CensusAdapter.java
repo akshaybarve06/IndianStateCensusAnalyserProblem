@@ -14,21 +14,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.StreamSupport;
-
-
 import static java.nio.file.Files.newBufferedReader;
 
-public abstract class CensusAdapter {
-
+public abstract class CensusAdapter
+{
     public abstract Map<String, CensusDAO> loadCensusData(String... csvFilePath) throws StateCensusException;
 
-    public <E> Map<String, CensusDAO> loadCensusData(Class<E> censusCSVClass, String csvFilePath) throws StateCensusException {
+    public <E> Map<String, CensusDAO> loadCensusData(Class<E> censusCSVClass, String csvFilePath) throws StateCensusException
+    {
         Map<String, CensusDAO> censusDAOMap = new HashMap<>();
-        try (Reader reader = newBufferedReader(Paths.get(csvFilePath));) {
+        try (Reader reader = newBufferedReader(Paths.get(csvFilePath));)
+        {
             OpenCSV csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<E> stateCensusIterator = csvBuilder.getIterator(reader, censusCSVClass);
             Iterable<E> stateCensuses = () -> stateCensusIterator;
-            if (censusCSVClass.getName().contains("StateCensusCSV")) {
+            if (censusCSVClass.getName().contains("StateCensusCSV"))
+            {
                 StreamSupport.stream(stateCensuses.spliterator(), false)
                         .map(StateCensusCSV.class::cast)
                         .forEach(censusCSV -> censusDAOMap.put(censusCSV.StateName, new CensusDAO(censusCSV)));

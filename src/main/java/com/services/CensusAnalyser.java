@@ -7,17 +7,21 @@ import com.google.gson.Gson;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CensusAnalyser <E>{
-
-    public enum Country {INDIA, US}
-    public enum SortingMode { STATENAME, POPULATION, DENSITY, AREA }
+public class CensusAnalyser <E>
+{
+    public enum Country {
+        INDIA, US
+    }
+    public enum SortingMode {
+        STATENAME, POPULATION, DENSITY, AREA
+    }
 
     List<CensusDAO> censusList = null;
     Map<String, CensusDAO> censusDAOMap = null;
 
     private Country country;
-    //CONSTRUCTOR
 
+    //CONSTRUCTOR
     public CensusAnalyser(Country country) {
         this.country = country;
     }
@@ -29,25 +33,24 @@ public class CensusAnalyser <E>{
         censusList = censusDAOMap.values().stream().collect(Collectors.toList());
         return censusDAOMap.size();
     }
+
     //METHOD TO LOAD STATE CODE CSV DATA AND COUNT NUMBER OF RECORD IN CSV FILE
     public String sortedStateCensusData(SortingMode mode) throws StateCensusException
     {
         if (censusList == null || censusList.size() == 0)
-        {
-            throw new StateCensusException( "Census Data Not Found", StateCensusException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
-        }
+           throw new StateCensusException( "Census Data Not Found", StateCensusException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
+
         ArrayList arrayList = censusDAOMap.values().stream()
-                .sorted(CensusDAO.getSortComparator(mode))
-                .map(censusDAO -> censusDAO.getCensusDTO(country))
-                .collect(Collectors.toCollection(ArrayList::new));
+            .sorted(CensusDAO.getSortComparator(mode))
+            .map(censusDAO -> censusDAO.getCensusDTO(country))
+            .collect(Collectors.toCollection(ArrayList::new));
         return new Gson().toJson(arrayList);
     }
     public String sortedDataPopulationWise() throws StateCensusException
     {
         if (censusList == null || censusList.size() == 0)
-        {
             throw new StateCensusException( "Census Data Not Found", StateCensusException.TypeOfExceptionThrown.CENSUS_DATA_NOT_FOUND_EXCEPTION);
-        }
+
         Comparator<CensusDAO> censusComparator = Comparator.comparing(CensusDAO -> CensusDAO.Population);
         this.sortData(censusComparator);
         Collections.reverse(censusList);

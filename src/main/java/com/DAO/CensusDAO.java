@@ -17,26 +17,30 @@ public class CensusDAO {
     public int TIN;
     public int SrNo;
 
-    public CensusDAO(StateCensusCSV stateCensusCSV) {
+    public CensusDAO(StateCensusCSV stateCensusCSV)
+    {
         this.StateName = stateCensusCSV.StateName;
         this.Population = stateCensusCSV.Population;
         this.AreaInSqKm = stateCensusCSV. AreaInSqKm;
         this.DensityPerSqKm = stateCensusCSV. DensityPerSqKm;
     }
-    public CensusDAO(StateDataCSV stateDataCSV) {
+    public CensusDAO(StateDataCSV stateDataCSV)
+    {
         this.SrNo = stateDataCSV.SrNo;
         this.StateName = stateDataCSV.StateName;
         this.TIN = stateDataCSV.TIN;
         this.StateCode = stateDataCSV.StateCode;
     }
-    public CensusDAO(USCensusCSV usCensusCSV){
+    public CensusDAO(USCensusCSV usCensusCSV)
+    {
         this.StateID = usCensusCSV.StateID;
         this.StateName = usCensusCSV.StateName;
         this.Population = usCensusCSV.Population;
         this.AreaInSqKm = usCensusCSV.Area;
         this.DensityPerSqKm = usCensusCSV.PopulationDensity;
     }
-    public static Comparator<CensusDAO> getSortComparator(CensusAnalyser.SortingMode mode) {
+    public static Comparator<CensusDAO> getSortComparator(CensusAnalyser.SortingMode mode)
+    {
         if (mode.equals(CensusAnalyser.SortingMode.STATENAME))
             return Comparator.comparing(census -> census.StateName);
         if (mode.equals(CensusAnalyser.SortingMode.POPULATION))
@@ -59,9 +63,8 @@ public class CensusDAO {
     public long getDensityPerSqkm() {
         return DensityPerSqKm;
     }
-
-
-    public Object getCensusDTO(CensusAnalyser.Country country) {
+    public Object getCensusDTO(CensusAnalyser.Country country)
+    {
         if (country.equals(CensusAnalyser.Country.INDIA))
             return new StateCensusCSV(StateName, Population, AreaInSqKm, DensityPerSqKm);
         if (country.equals(CensusAnalyser.Country.US))

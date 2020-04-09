@@ -10,7 +10,8 @@ import org.junit.Test;
 import static com.services.CensusAnalyser.Country.INDIA;
 import static com.services.CensusAnalyser.Country.US;
 
-public class StateCensusTest {
+public class StateCensusTest
+{
 
     CensusAnalyser indianCensusAnalyzer = new CensusAnalyser( INDIA);
     CensusAnalyser usCensusAnalyzer = new CensusAnalyser(US);
@@ -18,7 +19,8 @@ public class StateCensusTest {
     // **************************** FOR INDIAN STATE CENSUS ***********************************
     // TC-1 READ CSV FILE IF NUMBER OF RECORDS MATCHES
     @Test
-    public void givenNumberOfRecords_WhenMatched_ShouldReturnTrue(){
+    public void givenNumberOfRecords_WhenMatched_ShouldReturnTrue()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
         try {
             int numberOfRecords = indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -29,7 +31,8 @@ public class StateCensusTest {
     }
     // TC-2 IF FILENAME INCORRECT THEN THROW CUSTOM EXCEPTION
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperFile_ReturnsException() {
+    public void givenStateCensusAnalyserFile_WhenImproperFile_ShouldReturnsException()
+    {
         final String CSV_FILE_PATH = "src/test/resources/stateCensus.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -39,7 +42,8 @@ public class StateCensusTest {
     }
     // TC-3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusAnalyserFile_WhenImproperFileName_ReturnsException()  {
+    public void givenStateCensusAnalyserFile_WhenImproperFileName_ShouldReturnsException()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensus.jpg";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -49,7 +53,8 @@ public class StateCensusTest {
     }
     // TC-4 IF FILE DELIMITERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusCSV_WhenImproperFileNameDelimiter_ReturnsException()  {
+    public void givenStateCensusCSV_WhenImproperFileNameDelimiter_ShouldReturnsException()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusDataCopy.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -59,7 +64,8 @@ public class StateCensusTest {
     }
     // TC-5 IF FILE HEADERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCensusCSV_WhenImproperFileHeaders_ReturnsException() {
+    public void givenStateCensusCSV_WhenImproperFileHeaders_ShouldReturnsException()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusDataCopy2.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -70,7 +76,8 @@ public class StateCensusTest {
     // **************************** FOR INDIAN STATE CODE ***********************************
     // TC-1 READ CSV FILE IF NUMBER OF RECORDS MATCHES
     @Test
-    public void givenStateCode_WhenTrue_NumberOfRecordShouldMatch() {
+    public void givenStateCode_WhenTrue_NumberOfRecord_ShouldMatch()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCode.csv";
         try {
             int numberOfRecords = indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -81,7 +88,8 @@ public class StateCensusTest {
     }
     // TC-2 IF FILENAME INCORRECT THEN THROW CUSTOM EXCEPTION
     @Test
-    public void givenStateCodeAnalyserFile_WhenImproperFile_ReturnsException() {
+    public void givenStateCodeAnalyserFile_WhenImproperFile_ShouldReturnsException()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCodeData.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -91,8 +99,9 @@ public class StateCensusTest {
     }
     // TC-3 IF FILE CORRECT BUT TYPE IS NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCodeAnalyserFile_WhenImproperFileName_ReturnsException() {
-         final String CSV_FILE_PATH = "src/test/resources/StateCode.jpg";
+    public void givenStateCodeAnalyserFile_WhenImproperFileName_ShouldReturnsException()
+    {
+        final String CSV_FILE_PATH = "src/test/resources/StateCode.jpg";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
         } catch (StateCensusException e) {
@@ -101,7 +110,8 @@ public class StateCensusTest {
     }
     // TC-4 IF FILE DELIMITERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCodeCSV_WhenImproperFileNameDelimiter_ReturnsException() {
+    public void givenStateCodeCSV_WhenImproperFileNameDelimiter_ShouldReturnsException()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCodeCopy.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -111,7 +121,8 @@ public class StateCensusTest {
     }
     // TC-5 IF FILE HEADERS ARE NOT PROPER THEN THROW EXCEPTION
     @Test
-    public void givenStateCodeCSV_WhenImproperFileHeaders_ReturnsException() {
+    public void givenStateCodeCSV_WhenImproperFileHeaders_ShouldReturnsException()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCodeCopy2.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -122,7 +133,8 @@ public class StateCensusTest {
     // ************************************ INDIAN DATA SORT BY ****************************************
     // Test Case For Sorting Data By State Name
     @Test
-    public void givenIndianStateCensusData_WhenSorted_ReturnSortedResult(){
+    public void givenIndianStateCensusData_WhenSorted_ShouldReturnSortedResult()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -136,7 +148,8 @@ public class StateCensusTest {
     }
     // Test Case For Sorting Data By Population
     @Test
-    public void givenStateCensusData_WhenSortByPopulation_ReturnSortedResult() {
+    public void givenStateCensusData_WhenSortByPopulation_ShouldReturnSortedResult()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -149,7 +162,8 @@ public class StateCensusTest {
     }
     // Test Case For Sorting Data By Density
     @Test
-    public void givenStateCensusData_WhenSortByDensity_ReturnSortedResult() {
+    public void givenStateCensusData_WhenSortByDensity_ShouldReturnSortedResult()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -162,7 +176,8 @@ public class StateCensusTest {
     }
     // Test Case For Sorting Data By Area
     @Test
-    public void givenStateCensusData_WhenSortByArea_ReturnSortedResult() {
+    public void givenStateCensusData_WhenSortByArea_ShouldReturnSortedResult()
+    {
         final String CSV_FILE_PATH = "src/test/resources/StateCensusData.csv";
         try {
             indianCensusAnalyzer.loadStateCensusCSVData(INDIA, CSV_FILE_PATH);
@@ -176,7 +191,8 @@ public class StateCensusTest {
     // ************************************ US DATA SORT BY ****************************************
     // Test Case For Load Records From USCensusCSV Data
     @Test
-    public void givenUSCensusData_WhenTrue_RecordShouldMatch() throws StateCensusException {
+    public void givenUSCensusData_WhenTrue_RecordShouldMatch() throws StateCensusException
+    {
         final String CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
         try {
             int numberOfRecords = usCensusAnalyzer.loadStateCensusCSVData(US, CSV_FILE_PATH);
@@ -188,7 +204,8 @@ public class StateCensusTest {
     }
     // Test Case For Sort The Data of USCensusCSV By Population
     @Test
-    public void givenUSCensusData_WhenSortedByPopulation_ReturnSortedResult() {
+    public void givenUSCensusData_WhenSortedByPopulation_ShouldReturnSortedResult()
+    {
         final String CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
         try {
             usCensusAnalyzer.loadStateCensusCSVData(US, CSV_FILE_PATH);
@@ -201,7 +218,8 @@ public class StateCensusTest {
     }
     // Test Case For Sort The Data of USCensusCSV By PopulationDensity
     @Test
-    public void givenTheUSCensusData_WhenSortedOnPopulationDensity_ShouldReturnSortedResult() {
+    public void givenTheUSCensusData_WhenSortedOnPopulationDensity_ShouldReturnSortedResult()
+    {
         final String CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
         try {
             usCensusAnalyzer.loadStateCensusCSVData(US, CSV_FILE_PATH);
@@ -214,7 +232,8 @@ public class StateCensusTest {
     }
     // Test Case For Sort The Data of USCensusCSV By Area
     @Test
-    public void givenTheUSCensusData_WhenSortedOnArea_ShouldReturnSortedResult() {
+    public void givenTheUSCensusData_WhenSortedOnArea_ShouldReturnSortedResult()
+    {
         final String CSV_FILE_PATH = "src/test/resources/USCensusData.csv";
         try {
             usCensusAnalyzer.loadStateCensusCSVData(US, CSV_FILE_PATH);

@@ -6,8 +6,10 @@ import com.services.CensusAnalyser;
 
 import java.util.Map;
 
-public class CensusAdapterFactory {
-    public static Map<String, CensusDAO> getCensusData(CensusAnalyser.Country country, String[] csvFilePath) throws StateCensusException {
+public class CensusAdapterFactory
+{
+    public static Map<String, CensusDAO> getCensusData(CensusAnalyser.Country country, String[] csvFilePath) throws StateCensusException
+    {
         if (country.equals(CensusAnalyser.Country.INDIA))
             return new IndianCensusAdapter().loadCensusData(csvFilePath);
         else if (country.equals(CensusAnalyser.Country.US))

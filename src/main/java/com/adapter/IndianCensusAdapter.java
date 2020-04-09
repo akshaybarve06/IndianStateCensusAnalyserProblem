@@ -16,9 +16,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-public class IndianCensusAdapter extends CensusAdapter {
+public class IndianCensusAdapter extends CensusAdapter
+{
     @Override
-    public Map<String, CensusDAO> loadCensusData(String... csvFilePath) throws StateCensusException {
+    public Map<String, CensusDAO> loadCensusData(String... csvFilePath) throws StateCensusException
+    {
         Map<String, CensusDAO> censusDAOMap = super.loadCensusData(StateCensusCSV.class, csvFilePath[0]);
         if (csvFilePath.length == 1)
             return censusDAOMap;
@@ -29,9 +31,8 @@ public class IndianCensusAdapter extends CensusAdapter {
     {
         String extension = csvFilePath.substring(csvFilePath.lastIndexOf(".") + 1);
         if (!extension.equals("csv"))
-        {
             throw new StateCensusException("Given File Not Found ", StateCensusException.TypeOfExceptionThrown.FILE_NOT_FOUND_EXCEPTION);
-        }
+
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath)))
         {
             OpenCSV csvBuilder = CSVBuilderFactory.createCSVBuilder();
