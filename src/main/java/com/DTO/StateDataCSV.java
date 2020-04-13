@@ -9,7 +9,7 @@ public class StateDataCSV {
         @CsvBindByName(column = "SrNo")
         public int SrNo;
 
-        @CsvBindByName(column = "StateName")
+        @CsvBindByName(column = "StateName", required=true)
         public String StateName;
 
         @CsvBindByName(column = "StateCode")

@@ -6,16 +6,16 @@ public class StateCensusCSV {
 
     //Variables to Bind with Header of CSV
 
-    @CsvBindByName(column = "StateName")
+    @CsvBindByName(column = "StateName", required=true)
     public String StateName;
 
-    @CsvBindByName(column = "Population")
+    @CsvBindByName(column = "Population", required=true)
     public long Population;
 
-    @CsvBindByName(column = "AreaInSqKm")
+    @CsvBindByName(column = "AreaInSqKm", required=true)
     public long AreaInSqKm;
 
-    @CsvBindByName(column = "DensityPerSqKm")
+    @CsvBindByName(column = "DensityPerSqKm", required=true)
     public long DensityPerSqKm;
 
     public StateCensusCSV(String name, long population, long area, long density )
